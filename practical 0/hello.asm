@@ -10,16 +10,16 @@ section .data
     nl  db 0x0a ; adds a newline to msg
     msgLen  equ $-msg ; Calculate size of label before it, which is the msg in this case
 
-    segment .text
+segment .text
     global _start
 
-_start:
-    mov rax, 1  ; perform write
-    mov rdi, 1  ; destination is stdout
-    mov rsi, msg    ; data to write
-    mov rdx, msgLen ; byte count to write
-    syscall
+    _start:
+        mov rax, 1  ; perform write
+        mov rdi, 1  ; destination is stdout
+        mov rsi, msg    ; data to write
+        mov rdx, msgLen ; byte count to write
+        syscall
 
-    mov rax, 60 ; system call for exit
-    mov rdi, 0 ; exit code 0
-    syscall ; invoke system call
+        mov rax, 60 ; system call for exit
+        mov rdi, 0 ; exit code 0
+        syscall ; invoke system call

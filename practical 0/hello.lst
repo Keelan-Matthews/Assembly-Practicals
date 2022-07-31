@@ -1,0 +1,28 @@
+     1                                 %line 1+1 hello.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 [section .data]
+    10 00000000 48656C6C6F20776F72-     msg db 'Hello world!'
+    11 00000000 6C6421             
+    12 0000000C 0A                      nl db 0x0a
+    13                                  msgLen equ $-msg
+    14                                 
+    15                                 [segment .text]
+    16                                 [global _start]
+    17                                 
+    18                                  _start:
+    19 00000000 48C7C001000000          mov rax, 1
+    20 00000007 48C7C701000000          mov rdi, 1
+    21 0000000E 48C7C6[00000000]        mov rsi, msg
+    22 00000015 48BA0D000000000000-     mov rdx, msgLen
+    23 00000015 00                 
+    24 0000001F 0F05                    syscall
+    25                                 
+    26 00000021 48C7C03C000000          mov rax, 60
+    27 00000028 48C7C700000000          mov rdi, 0
+    28 0000002F 0F05                    syscall
