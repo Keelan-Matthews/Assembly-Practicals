@@ -1,0 +1,98 @@
+     1                                 %line 1+1 p1.asm
+     2                                 [segment .data]
+     3 00000000 436F6E736964657220-     intro: db "Consider the following languages when answering the questions below:", 0x0a
+     4 00000000 74686520666F6C6C6F-
+     5 00000000 77696E67206C616E67-
+     6 00000000 756167657320776865-
+     7 00000000 6E20616E7377657269-
+     8 00000000 6E6720746865207175-
+     9 00000000 657374696F6E732062-
+    10 00000000 656C6F773A0A       
+    11                                  intro_length: equ $-intro
+    12 00000045 4A6176612C20507974-     lang: db "Java, Python, Assembly, C++", 0x0a
+    13 00000045 686F6E2C2041737365-
+    14 00000045 6D626C792C20432B2B-
+    15 00000045 0A                 
+    16                                  lang_length: equ $-lang
+    17 00000061 417373656D626C7920-     q1: db "Assembly has the smallest binary executable", 0x0a
+    18 00000061 686173207468652073-
+    19 00000061 6D616C6C6573742062-
+    20 00000061 696E61727920657865-
+    21 00000061 63757461626C650A   
+    22                                  q1_length: equ $-q1
+    23 0000008D 417373656D626C7920-     q2: db "Assembly has the fastest executable", 0x0a
+    24 0000008D 686173207468652066-
+    25 0000008D 617374657374206578-
+    26 0000008D 6563757461626C650A 
+    27                                  q2_length: equ $-q2
+    28 000000B1 4A6176612069732063-     q3: db "Java is compiled to byte code", 0x0a
+    29 000000B1 6F6D70696C65642074-
+    30 000000B1 6F206279746520636F-
+    31 000000B1 64650A             
+    32                                  q3_length: equ $-q3
+    33 000000CF 4A617661206973206D-     q4: db "Java is my favourite programming language", 0x0a
+    34 000000CF 79206661766F757269-
+    35 000000CF 74652070726F677261-
+    36 000000CF 6D6D696E67206C616E-
+    37 000000CF 67756167650A       
+    38                                  q4_length: equ $-q4
+    39 000000F9 476F6F64206C75636B-     q5: db "Good luck with the rest of the semester, I hope you enjoy COS284!", 0x0a
+    40 000000F9 207769746820746865-
+    41 000000F9 2072657374206F6620-
+    42 000000F9 7468652073656D6573-
+    43 000000F9 7465722C204920686F-
+    44 000000F9 706520796F7520656E-
+    45 000000F9 6A6F7920434F533238-
+    46 000000F9 34210A             
+    47                                  q5_length: equ $-q5
+    48                                 
+    49                                 [segment .text]
+    50                                 [global _start]
+    51                                 
+    52                                 _start:
+    53 00000000 B801000000              mov eax, 1
+    54 00000005 BF01000000              mov edi, 1
+    55 0000000A BA45000000              mov edx, intro_length
+    56 0000000F 488D3425[00000000]      lea rsi, [intro]
+    57 00000017 0F05                    syscall
+    58                                 
+    59 00000019 B801000000              mov eax, 1
+    60 0000001E BF01000000              mov edi, 1
+    61 00000023 BA1C000000              mov edx, lang_length
+    62 00000028 488D3425[00000000]      lea rsi, [lang]
+    63 00000030 0F05                    syscall
+    64                                 
+    65 00000032 B801000000              mov eax, 1
+    66 00000037 BF01000000              mov edi, 1
+    67 0000003C BA2C000000              mov edx, q1_length
+    68 00000041 488D3425[00000000]      lea rsi, [q1]
+    69 00000049 0F05                    syscall
+    70                                 
+    71 0000004B B801000000              mov eax, 1
+    72 00000050 BF01000000              mov edi, 1
+    73 00000055 BA24000000              mov edx, q2_length
+    74 0000005A 488D3425[00000000]      lea rsi, [q2]
+    75 00000062 0F05                    syscall
+    76                                 
+    77 00000064 B801000000              mov eax, 1
+    78 00000069 BF01000000              mov edi, 1
+    79 0000006E BA1E000000              mov edx, q3_length
+    80 00000073 488D3425[00000000]      lea rsi, [q3]
+    81 0000007B 0F05                    syscall
+    82                                 
+    83 0000007D B801000000              mov eax, 1
+    84 00000082 BF01000000              mov edi, 1
+    85 00000087 BA2A000000              mov edx, q4_length
+    86 0000008C 488D3425[00000000]      lea rsi, [q4]
+    87 00000094 0F05                    syscall
+    88                                 
+    89 00000096 B801000000              mov eax, 1
+    90 0000009B BF01000000              mov edi, 1
+    91 000000A0 BA42000000              mov edx, q5_length
+    92 000000A5 488D3425[00000000]      lea rsi, [q5]
+    93 000000AD 0F05                    syscall
+    94                                 
+    95                                 exit:
+    96 000000AF B83C000000              mov eax, 60
+    97 000000B4 31FF                    xor edi, edi
+    98 000000B6 0F05                    syscall

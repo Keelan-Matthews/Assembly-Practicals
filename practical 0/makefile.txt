@@ -1,0 +1,13 @@
+#makefile
+
+main: main.o
+	ld -o main main.o
+
+main.o: main.asm
+	yasm -f elf64 -g dwarf2 -l main.lst main.asm
+
+clean:
+	rm -f main main.o main.lst
+
+run:
+	./main
