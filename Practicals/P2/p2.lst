@@ -1,0 +1,138 @@
+     1                                 %line 1+1 p2.asm
+     2                                 [global _start]
+     3                                 [section .text]
+     4                                 
+     5                                 _start:
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10 00000000 48C7C6[00000000]        mov rsi, name_prompt
+    11 00000007 48BA1D000000000000-     mov rdx, name_prompt_size
+    12 00000007 00                 
+    13 00000011 E8AB000000              call output
+    14                                 
+    15                                 
+    16 00000016 48C7C6[00000000]        mov rsi, product
+    17 0000001D 48C7C208000000          mov rdx, 8
+    18 00000024 E8A9000000              call input
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23 00000029 4831DB                  xor rbx, rbx
+    24 0000002C 488B1C25[00000000]      mov rbx, [product]
+    25 00000034 48891C25[12000000]      mov [q1+18], rbx
+    26 0000003C C60425[1A000000]0A      mov byte [q1+26], newline
+    27                                 
+    28                                 
+    29                                 
+    30 00000044 48C7C6[00000000]        mov rsi, q1
+    31 0000004B 48BA1B000000000000-     mov rdx, q1_size
+    32 0000004B 00                 
+    33 00000055 E867000000              call output
+    34                                 
+    35                                 
+    36 0000005A 48C7C6[00000000]        mov rsi, price_prompt
+    37 00000061 48BA16000000000000-     mov rdx, price_prompt_size
+    38 00000061 00                 
+    39 0000006B E851000000              call output
+    40                                 
+    41                                 
+    42 00000070 48C7C6[00000000]        mov rsi, price
+    43 00000077 48C7C201000000          mov rdx, 1
+    44 0000007E E84F000000              call input
+    45                                 
+    46                                 
+    47                                 
+    48 00000083 8A0425[00000000]        mov al, [price]
+    49 0000008A 2C30                    sub al, '0'
+    50                                 
+    51                                 
+    52                                 
+    53                                 
+    54 0000008C B132                    mov cl, '2'
+    55 0000008E 80E930                  sub cl, '0'
+    56 00000091 F6E1                    mul cl
+    57                                 
+    58                                 
+    59                                 
+    60 00000093 0430                    add al, '0'
+    61                                 
+    62                                 
+    63                                 
+    64                                 
+    65 00000095 880425[3C000000]        mov [q2+60], al
+    66 0000009C C60425[3D000000]0A      mov byte [q2+61], newline
+    67                                 
+    68                                 
+    69 000000A4 48C7C6[00000000]        mov rsi, q2
+    70 000000AB 48BA3E000000000000-     mov rdx, q2_size
+    71 000000AB 00                 
+    72 000000B5 E807000000              call output
+    73                                 
+    74                                 
+    75                                 
+    76                                 
+    77                                 exit:
+    78 000000BA 48C7C03C000000          mov rax, 60
+    79 000000C1 4831FF                  xor rdi, rdi
+    80 000000C4 0F05                    syscall
+    81                                 
+    82                                 
+    83                                 
+    84                                 output:
+    85 000000C6 48C7C001000000          mov rax, 1
+    86 000000CD 48C7C701000000          mov rdi, 1
+    87 000000D4 0F05                    syscall
+    88 000000D6 C3                      ret
+    89                                 
+    90                                 input:
+    91                                 
+    92 000000D7 48C7C000000000          mov rax, 0
+    93 000000DE 48C7C700000000          mov rdi, 0
+    94 000000E5 0F05                    syscall
+    95                                 
+    96                                 
+    97 000000E7 48C7C000000000          mov rax, 0
+    98 000000EE 48C7C700000000          mov rdi, 0
+    99 000000F5 48C7C201000000          mov rdx, 1
+   100 000000FC 48C7C6[00000000]        mov rsi, trash
+   101 00000103 0F05                    syscall
+   102 00000105 C3                      ret
+   103                                 
+   104                                 
+   105                                 
+   106                                 
+   107                                 
+   108                                 
+   109                                 
+   110                                 
+   111                                 [section .data]
+   112 00000000 506C6561736520696E-    name_prompt: db "Please input a product name: "
+   113 00000000 70757420612070726F-
+   114 00000000 64756374206E616D65-
+   115 00000000 3A20               
+   116                                 name_prompt_size: equ $-name_prompt
+   117 0000001D 506C6561736520696E-    price_prompt: db "Please input a price: "
+   118 0000001D 707574206120707269-
+   119 0000001D 63653A20           
+   120                                 price_prompt_size: equ $-price_prompt
+   121 00000033 596F75206861766520-    q1: db "You have selected xxxxxxxx", 0x0a
+   122 00000033 73656C656374656420-
+   123 00000033 78787878787878780A 
+   124                                 q1_size: equ $-q1
+   125 0000004E 416D617A696E67206F-    q2: db "Amazing offer: Buy two of these and pay for both, now only Rx", 0x0a
+   126 0000004E 666665723A20427579-
+   127 0000004E 2074776F206F662074-
+   128 0000004E 6865736520616E6420-
+   129 0000004E 70617920666F722062-
+   130 0000004E 6F74682C206E6F7720-
+   131 0000004E 6F6E6C792052780A   
+   132                                 q2_size: equ $-q2
+   133                                 newline: equ 0x0a
+   134                                 
+   135                                 [section .bss]
+   136 00000000 <gap>                  product: resb 8
+   137 00000008 <gap>                  price: resb 1
+   138 00000009 <gap>                  trash: resb 1
